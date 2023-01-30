@@ -1,5 +1,8 @@
 from django.db import models
 from django.forms import model_to_dict
+from django.contrib.auth import models as auth_models
+User = auth_models.User
+
 
 def create_dict(model: models.Model) -> dict:
     """
@@ -39,9 +42,7 @@ def get_delta_dict(modle_dict_before: dict, model_dict_after: dict):
 
     return delta
 
-class User(models.Model):
-    username = models.CharField(unique=True, max_length=20)
-    password = models.CharField(max_length=99)
+
 
 class Entity(models.Model):
     name = models.CharField(max_length=100)
