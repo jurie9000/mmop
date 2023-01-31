@@ -1,6 +1,8 @@
 import json
 import enum
 
+#__________________________________________________________________Actions_______________________________________________________________________________________
+
 
 class Action(enum.Enum):
     Ok = enum.auto()
@@ -10,6 +12,9 @@ class Action(enum.Enum):
     Chat = enum.auto()
     ModleDelta = enum.auto()
     Target = enum.auto()
+
+
+#__________________________________________________________________________________________________________________________________________________________________
 
 
 class Packet:
@@ -26,6 +31,10 @@ class Packet:
 
     def __bytes__(self) -> bytes:
         return str(self).encode('utf-8')
+
+
+#__________________________________________________________________Packets_______________________________________________________________________________________
+
 
 class OkPacket(Packet):
     def __init__(self):
@@ -55,6 +64,9 @@ class TargetPacket(Packet):
     def __init__(self, t_x: float, t_y: float):
         super().__init__(Action.Target, t_x, t_y)
 
+#____________________________________________________________________________________________________________________________________________________________________
+
+
 
 def from_json(json_str: str) -> Packet:
     obj_dict = json.loads(json_str)
@@ -69,7 +81,7 @@ def from_json(json_str: str) -> Packet:
             index = int(key[1:])
             payloads.insert(index, value)
 
-    # Use reflection to construct the specific packet type we're looking for
+    
     class_name = action + "Packet"
     try:
         constructor: type = globals()[class_name]
